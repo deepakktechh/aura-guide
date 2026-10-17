@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useRef } from 'react';
 import {
   DeviceStatus,
   DeviceConfiguration,
@@ -67,21 +67,31 @@ export const DemoDeviceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     return Math.round((30 + ratio * 40) * baseMultiplier);
   }, [proximityCategory, distanceCm, config]);
 
-  // Log event on significant state change (throttled)
+  // Track previous category to record meaningful hazard transitions without flooding events
+  const lastCategoryRef = useRef<ProximityState>(proximityCategory);
+
+  // Log event only on meaningful hazard zone transitions (prevents slider event spam)
   useEffect(() => {
-    if (proximityCategory !== 'safe' && proximityCategory !== 'offline') {
-      demoProviderInstance.recordSimulatorEvent(distanceCm, proximityCategory);
-      setEvents((prev) => [
-        {
-          id: `ev_${Date.now()}`,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          distanceCm,
-          category: proximityCategory,
-          vibrationIntensity: proximityCategory === 'close' ? 'HIGH' : 'MEDIUM',
-          durationMs: proximityCategory === 'close' ? 1400 : 750,
-        },
-        ...prev.slice(0, 19),
-      ]);
+    const prevCategory = lastCategoryRef.current;
+
+    if (proximityCategory !== prevCategory) {
+      lastCategoryRef.current = proximityCategory;
+
+      // Only log when entering active hazard zones (Approaching or Close Hazard)
+      if (proximityCategory === 'approaching' || proximityCategory === 'close') {
+        demoProviderInstance.recordSimulatorEvent(distanceCm, proximityCategory);
+        setEvents((prev) => [
+          {
+            id: `ev_${Date.now()}`,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            distanceCm,
+            category: proximityCategory,
+            vibrationIntensity: proximityCategory === 'close' ? 'HIGH' : 'MEDIUM',
+            durationMs: proximityCategory === 'close' ? 1400 : 750,
+          },
+          ...prev.slice(0, 19),
+        ]);
+      }
     }
   }, [proximityCategory, distanceCm]);
 
@@ -100,6 +110,7 @@ export const DemoDeviceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setConfig(INITIAL_DEMO_CONFIG);
     setDistanceCm(110);
     setStatus(INITIAL_DEMO_STATUS);
+    lastCategoryRef.current = 'safe';
   };
 
   const setPreset = (preset: 'safe' | 'approaching' | 'close' | 'offline') => {

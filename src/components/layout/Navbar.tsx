@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Right CTA & Controls */}
-        <div className="hidden sm:flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5">
           {/* Accessible Theme Toggle */}
           <button
             onClick={cycleTheme}
@@ -96,27 +96,17 @@ export const Navbar: React.FC = () => {
           </button>
 
           {/* Explore Dashboard CTA */}
-          <Link to="/dashboard">
+          <Link to="/dashboard" className="hidden sm:inline-flex">
             <Button size="sm" variant="primary" icon={<LayoutDashboard className="w-4 h-4" />}>
               Explore Dashboard
             </Button>
           </Link>
-        </div>
 
-        {/* Mobile Hamburger Button */}
-        <div className="flex sm:hidden items-center gap-2">
-          <button
-            onClick={cycleTheme}
-            aria-label="Toggle theme"
-            className="p-2 rounded-lg border border-aura-light-border dark:border-aura-dark-border text-aura-light-muted dark:text-aura-dark-muted"
-          >
-            {theme === 'dark' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-          </button>
-
+          {/* Mobile & Tablet Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open navigation menu'}
-            className="p-2 rounded-lg text-aura-light-text dark:text-aura-dark-text hover:bg-slate-200/50 dark:hover:bg-slate-700/50"
+            className="lg:hidden p-2 rounded-lg text-aura-light-text dark:text-aura-dark-text hover:bg-slate-200/50 dark:hover:bg-slate-700/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aura-light-focus dark:focus-visible:ring-aura-dark-focus"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>

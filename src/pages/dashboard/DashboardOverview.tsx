@@ -140,7 +140,20 @@ export const DashboardOverview: React.FC = () => {
             </Badge>
           </div>
           <p className="text-[11px] text-aura-light-muted dark:text-aura-dark-muted mt-2">
-            {distanceCm} cm frontal distance
+            {config.offlineSimulation ? (
+              <span>
+                <strong className="text-rose-500 dark:text-rose-400 block font-medium">
+                  Sensor Offline — Feed Unavailable
+                </strong>
+                {distanceCm > 0 && (
+                  <span className="block text-[10px] opacity-75 mt-0.5">
+                    Last recorded (stale): {distanceCm} cm
+                  </span>
+                )}
+              </span>
+            ) : (
+              <span>{distanceCm} cm frontal distance</span>
+            )}
           </p>
         </BentoCard>
 
