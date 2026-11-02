@@ -23,14 +23,14 @@ export default {
           },
           // Light palette
           light: {
-            bg: '#F5F9FC',
+            bg: '#F7F3F6',
             surface: '#FFFFFF',
-            card: '#EAF3F8',
-            text: '#11283A',
-            muted: '#40576B',
-            border: '#CEDFE9',
-            action: '#087C91',
-            focus: '#1358A8',
+            card: '#FFFFFF',
+            text: '#18181B',
+            muted: '#71717A',
+            border: '#E8E2E8',
+            action: '#18181B',
+            focus: '#18181B',
           },
           // Status indicators
           status: {
@@ -41,9 +41,16 @@ export default {
             warningLight: '#B45309',
             dangerLight: '#B91C1C',
           }
-        }
+        },
+        lime: {
+          DEFAULT: '#d2ee38',
+          hover: '#bfdd25',
+          deep: '#84a914',
+          subtle: 'rgba(210, 238, 56, 0.15)',
+        },
       },
       fontFamily: {
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
         heading: ['"Space Grotesk"', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],

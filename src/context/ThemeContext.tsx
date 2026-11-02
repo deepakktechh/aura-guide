@@ -15,14 +15,14 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('aura_theme') as ThemeMode;
-    return saved === 'light' || saved === 'dark' || saved === 'system' ? saved : 'dark';
+    return saved === 'light' || saved === 'dark' || saved === 'system' ? saved : 'light';
   });
 
   const [highContrast, setHighContrast] = useState<boolean>(() => {
     return localStorage.getItem('aura_high_contrast') === 'true';
   });
 
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark');
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
     const root = document.documentElement;

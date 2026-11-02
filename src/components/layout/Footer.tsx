@@ -1,132 +1,171 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Compass, ShieldCheck, Heart, ExternalLink } from 'lucide-react';
+import { ArrowRight, Compass, Linkedin, Instagram, Youtube, Sparkles } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 export const Footer: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let rotation = 0;
+
+    // Generate globe latitude/longitude dots
+    const dots: { x: number; y: number; z: number }[] = [];
+    const numLat = 16;
+    const numLng = 32;
+    const radius = 120;
+
+    for (let i = 0; i <= numLat; i++) {
+      const lat = (Math.PI * i) / numLat - Math.PI / 2;
+      for (let j = 0; j < numLng; j++) {
+        const lng = (2 * Math.PI * j) / numLng;
+        const x = radius * Math.cos(lat) * Math.sin(lng);
+        const y = radius * Math.sin(lat);
+        const z = radius * Math.cos(lat) * Math.cos(lng);
+        dots.push({ x, y, z });
+      }
+    }
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+
+      rotation += 0.007;
+
+      const isDark = resolvedTheme === 'dark';
+
+      // Draw dots
+      for (const dot of dots) {
+        const cosR = Math.cos(rotation);
+        const sinR = Math.sin(rotation);
+        const rx = dot.x * cosR - dot.z * sinR;
+        const rz = dot.x * sinR + dot.z * cosR;
+
+        const fov = 300;
+        const scale = fov / (fov + rz + 50);
+        const px = cx + rx * scale;
+        const py = cy + dot.y * scale;
+
+        const alpha = Math.max(0.12, (rz + radius) / (2 * radius));
+        ctx.beginPath();
+        ctx.arc(px, py, Math.max(0.8, 1.8 * scale), 0, Math.PI * 2);
+        ctx.fillStyle = isDark
+          ? `rgba(255, 255, 255, ${alpha * 0.85})`
+          : `rgba(24, 24, 27, ${alpha * 0.75})`;
+        ctx.fill();
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [resolvedTheme]);
+
   return (
-    <footer className="border-t border-aura-light-border dark:border-aura-dark-border bg-aura-light-card/40 dark:bg-aura-dark-card/40 text-aura-light-muted dark:text-aura-dark-muted transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
-          {/* Brand Info */}
-          <div className="space-y-4 md:col-span-1">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-aura-light-action dark:bg-aura-dark-cyan text-aura-dark-bg flex items-center justify-center font-bold">
-                <Compass className="w-4 h-4 text-aura-dark-bg" />
-              </div>
-              <span className="font-heading font-bold text-lg text-aura-light-text dark:text-aura-dark-text">
-                AURA GUIDE
-              </span>
-            </Link>
-            <p className="text-xs leading-relaxed">
-              <strong>Spatial Awareness Attachment for the Visually Impaired.</strong> A haptic-first wearable prototype
-              providing intuitive tactile warnings for frontal obstacles.
+    <footer className="bg-[#F4F0F4] dark:bg-[#090b0c] text-zinc-900 dark:text-white pt-20 pb-12 border-t border-zinc-200/80 dark:border-white/10 relative overflow-hidden transition-colors duration-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        
+        {/* Brand Header */}
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-zinc-950 dark:bg-white text-white dark:text-zinc-950 flex items-center justify-center font-bold shadow-sm">
+            <Sparkles className="w-4 h-4" />
+          </div>
+          <span className="font-heading font-black text-sm tracking-wider uppercase text-zinc-950 dark:text-white">
+            Aura Guide
+          </span>
+        </div>
+
+        {/* Main CTA Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div className="lg:col-span-7 space-y-6">
+            <h2 className="font-heading font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight text-zinc-950 dark:text-white uppercase leading-[0.98]">
+              LET'S BUILD A MORE ACCESSIBLE WORLD.
+            </h2>
+
+            <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-lg leading-relaxed font-sans">
+              We're exploring, designing, and building towards an inclusive future of spatial awareness. Open source, human-centered, and dignity-first.
             </p>
-            <p className="text-[11px] italic text-aura-light-action dark:text-aura-dark-cyan">
-              “Feel the Space. Navigate with Confidence.”
-            </p>
-          </div>
 
-          {/* Navigation Links */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-aura-light-text dark:text-aura-dark-text font-mono">
-              Project Navigation
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <Link to="/" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  Home &amp; Showcase
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  About &amp; Mission
-                </Link>
-              </li>
-              <li>
-                <Link to="/how-it-works" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link to="/prototype" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  Hardware &amp; Prototype
-                </Link>
-              </li>
-            </ul>
-          </div>
+            {/* Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link
+                to="/team"
+                className="inline-flex items-center justify-between gap-3 px-7 py-3.5 rounded-full bg-zinc-950 hover:bg-zinc-800 text-white dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200 text-sm font-semibold transition-all shadow-md active:scale-95 group"
+              >
+                <span>Get in Touch</span>
+                <div className="w-6 h-6 rounded-full bg-white/20 dark:bg-black/10 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </Link>
 
-          {/* Research & Trust */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-aura-light-text dark:text-aura-dark-text font-mono">
-              Research &amp; Specs
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <Link to="/research" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  Exploratory Survey (n = 10)
-                </Link>
-              </li>
-              <li>
-                <Link to="/roadmap" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  ESP32 &amp; IoT Roadmap
-                </Link>
-              </li>
-              <li>
-                <Link to="/team" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  Student Team &amp; Faculty
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="hover:text-aura-light-text dark:hover:text-aura-dark-text transition-colors">
-                  Frequently Asked Questions
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Academic & Institution */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-aura-light-text dark:text-aura-dark-text font-mono">
-              Academic Context
-            </h4>
-            <div className="text-xs space-y-1.5">
-              <p className="font-semibold text-aura-light-text dark:text-aura-dark-text">
-                SRM Institute of Science and Technology
-              </p>
-              <p>Ramapuram Campus, Chennai</p>
-              <p>Department of Computer Science &amp; Engineering (CSE Core-N)</p>
-              <p className="text-[11px] text-aura-light-muted dark:text-aura-dark-muted">
-                Design Thinking &amp; Methodology (DTM) Project
-              </p>
-              <div className="pt-2">
-                <Link
-                  to="/dashboard"
-                  className="inline-flex items-center gap-1.5 text-xs text-aura-light-action dark:text-aura-dark-cyan hover:underline font-semibold"
-                >
-                  <span>Launch Demo Dashboard</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </Link>
-              </div>
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white font-medium text-sm hover:border-zinc-400 active:scale-95 transition-all shadow-xs"
+              >
+                <span>Learn More</span>
+              </Link>
             </div>
           </div>
+
+          {/* Minimalist Rotating Globe */}
+          <div className="lg:col-span-5 flex items-center justify-center">
+            <div className="relative w-[320px] h-[320px] flex items-center justify-center">
+              <canvas
+                ref={canvasRef}
+                width={320}
+                height={320}
+                className="relative z-10 w-full h-full"
+                aria-label="3D rotating accessibility globe"
+              />
+            </div>
+          </div>
+
         </div>
 
-        {/* Safety & Honest Disclaimer Banner */}
-        <div className="mt-10 pt-6 border-t border-aura-light-border/60 dark:border-aura-dark-border/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs">
-          <div className="flex items-start gap-2.5 max-w-3xl">
-            <ShieldCheck className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-            <p className="text-[11px] text-aura-light-muted dark:text-aura-dark-muted leading-relaxed">
-              <strong>Academic Research Disclaimer:</strong> AURA GUIDE is an early student engineering prototype developed
-              for educational purposes. It is not a certified medical device and does not claim to prevent accidents or
-              replace white canes, guide animals, or professional orientation-and-mobility training.
-            </p>
+        {/* Bottom Bar: Links, Social Icons & Copyright */}
+        <div className="pt-10 border-t border-zinc-200/80 dark:border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-zinc-500 dark:text-zinc-400 font-sans">
+          
+          <div className="flex flex-wrap items-center gap-6 font-medium">
+            <Link to="/" className="hover:text-zinc-950 dark:hover:text-white transition-colors">Home</Link>
+            <Link to="/about" className="hover:text-zinc-950 dark:hover:text-white transition-colors">About</Link>
+            <Link to="/how-it-works" className="hover:text-zinc-950 dark:hover:text-white transition-colors">How It Works</Link>
+            <Link to="/prototype" className="hover:text-zinc-950 dark:hover:text-white transition-colors">Prototype</Link>
+            <Link to="/roadmap" className="hover:text-zinc-950 dark:hover:text-white transition-colors">Vision</Link>
+            <Link to="/team" className="hover:text-zinc-950 dark:hover:text-white transition-colors">Contact</Link>
           </div>
-          <div className="text-[11px] text-aura-light-muted dark:text-aura-dark-muted flex items-center gap-1 flex-shrink-0">
-            <span>Built with care for accessibility</span>
-            <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
-            <span>2026 SRM IST</span>
+
+          <div className="flex items-center gap-4 text-zinc-600 dark:text-zinc-400">
+            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-zinc-950 dark:hover:text-white transition-colors" aria-label="LinkedIn">
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-zinc-950 dark:hover:text-white transition-colors" aria-label="Instagram">
+              <Instagram className="w-4 h-4" />
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="hover:text-zinc-950 dark:hover:text-white transition-colors" aria-label="YouTube">
+              <Youtube className="w-4 h-4" />
+            </a>
           </div>
+
+          <div className="text-right">
+            <span className="font-heading font-black text-zinc-900 dark:text-white uppercase tracking-wider block">AURA GUIDE</span>
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400">Feel the space around you.</span>
+          </div>
+
         </div>
+
       </div>
     </footer>
   );

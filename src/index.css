@@ -4,14 +4,14 @@
 
 @layer base {
   :root {
-    --color-bg: #F5F9FC;
+    --color-bg: #F7F3F6;
     --color-surface: #FFFFFF;
-    --color-card: #EAF3F8;
-    --color-text: #11283A;
-    --color-muted: #40576B;
-    --color-action: #087C91;
-    --color-border: #CEDFE9;
-    --color-focus: #1358A8;
+    --color-card: #FFFFFF;
+    --color-text: #18181B;
+    --color-muted: #71717A;
+    --color-action: #18181B;
+    --color-border: #E8E2E8;
+    --color-focus: #18181B;
   }
 
   .dark {
@@ -74,3 +74,99 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(54, 214, 233, 0.5);
 }
+
+@keyframes sonarWave {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes hapticPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(54, 214, 233, 0.6);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 25px 6px rgba(54, 214, 233, 0.35);
+  }
+}
+
+@keyframes hapticVibrateFast {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-1.5px, 1.5px); }
+  40% { transform: translate(-1.5px, -1.5px); }
+  60% { transform: translate(1.5px, 1.5px); }
+  80% { transform: translate(1.5px, -1.5px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes hapticVibrateGentle {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-0.8px, 0.8px); }
+  50% { transform: translate(0.8px, -0.8px); }
+  75% { transform: translate(-0.8px, -0.8px); }
+  100% { transform: translate(0, 0); }
+}
+
+.animate-sonar {
+  animation: sonarWave 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.animate-sonar-delay-1 {
+  animation: sonarWave 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  animation-delay: 0.9s;
+}
+
+.animate-sonar-delay-2 {
+  animation: sonarWave 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  animation-delay: 1.8s;
+}
+
+.animate-haptic-pulse {
+  animation: hapticPulse 1.6s ease-in-out infinite;
+}
+
+.animate-vibrate-fast {
+  animation: hapticVibrateFast 0.12s linear infinite;
+}
+
+.animate-vibrate-gentle {
+  animation: hapticVibrateGentle 0.3s linear infinite;
+}
+
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: subtleFloat 4.5s ease-in-out infinite;
+}
+
+@keyframes pulseRadarSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-sweep {
+  animation: pulseRadarSweep 12s linear infinite;
+}
+
+
