@@ -1,3 +1,4 @@
+'use client';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
@@ -13,16 +14,21 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<ThemeMode>(() => {
-    const saved = localStorage.getItem('aura_theme') as ThemeMode;
-    return saved === 'light' || saved === 'dark' || saved === 'system' ? saved : 'light';
-  });
-
-  const [highContrast, setHighContrast] = useState<boolean>(() => {
-    return localStorage.getItem('aura_high_contrast') === 'true';
-  });
-
+  const [theme, setTheme] = useState<ThemeMode>('light');
+  const [highContrast, setHighContrast] = useState<boolean>(false);
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const savedTheme = localStorage.getItem('aura_theme') as ThemeMode;
+    if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
+      setTheme(savedTheme);
+    }
+    const savedContrast = localStorage.getItem('aura_high_contrast');
+    if (savedContrast !== null) {
+      setHighContrast(savedContrast === 'true');
+    }
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;

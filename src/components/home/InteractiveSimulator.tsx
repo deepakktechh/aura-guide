@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Sliders, CheckCircle2, AlertTriangle, AlertOctagon, RotateCcw, Activity } from 'lucide-react';
 

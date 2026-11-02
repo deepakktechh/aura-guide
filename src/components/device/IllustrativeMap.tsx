@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { DeviceLocation } from '../../types/device';
 import { MapPin, Navigation, ShieldAlert, Crosshair, AlertOctagon } from 'lucide-react';

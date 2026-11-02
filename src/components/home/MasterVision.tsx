@@ -1,6 +1,7 @@
+'use client';
 import React from 'react';
 import { UserCheck, Shield, Globe, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/common/CompatLink';
 
 export const MasterVision: React.FC = () => {
   const highlights = [

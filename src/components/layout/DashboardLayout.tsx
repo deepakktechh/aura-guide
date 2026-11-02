@@ -1,5 +1,6 @@
+'use client';
 import React, { useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation } from '@/components/common/CompatLink';
 import { useDemoDevice } from '../../context/DemoDeviceContext';
 import { useTheme } from '../../context/ThemeContext';
 import {
@@ -26,7 +27,7 @@ import {
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 
-export const DashboardLayout: React.FC = () => {
+export const DashboardLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const { status, config, resetDemoDefaults, alerts } = useDemoDevice();
   const { theme, setTheme } = useTheme();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -243,7 +244,7 @@ export const DashboardLayout: React.FC = () => {
 
         {/* Main Dashboard Screen Viewport */}
         <main className="flex-1 min-w-0">
-          <Outlet />
+          {children || <Outlet />}
         </main>
       </div>
     </div>

@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/common/CompatLink';
 import { ArrowRight, AlertCircle, ShieldAlert } from 'lucide-react';
 
 export const MasterChallenge: React.FC = () => {

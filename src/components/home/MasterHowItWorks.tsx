@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Sliders, ShieldCheck, Activity, Eye, Cpu, Bell } from 'lucide-react';
 

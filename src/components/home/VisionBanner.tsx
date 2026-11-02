@@ -1,5 +1,6 @@
+'use client';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/common/CompatLink';
 import { ArrowRight, Check, Send } from 'lucide-react';
 
 export const VisionBanner: React.FC = () => {

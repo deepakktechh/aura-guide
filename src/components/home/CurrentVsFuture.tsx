@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/common/CompatLink';
 import { CheckCircle2, ArrowRight, Sparkles, Cpu, Layers } from 'lucide-react';
 
 export const CurrentVsFuture: React.FC = () => {

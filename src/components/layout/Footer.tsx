@@ -1,5 +1,6 @@
+'use client';
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/common/CompatLink';
 import { ArrowRight, Compass, Linkedin, Instagram, Youtube, Sparkles } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 

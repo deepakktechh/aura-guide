@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/common/CompatLink';
 import { ArrowRight, Play, Radar, Activity, UserCheck, Sparkles } from 'lucide-react';
 
 interface HeroEditorialProps {

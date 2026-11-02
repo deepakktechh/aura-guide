@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Eye, Cpu, Bell } from 'lucide-react';
 
