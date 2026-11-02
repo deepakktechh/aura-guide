@@ -14,7 +14,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="light" suppressHydrationWarning>
-      <body className="min-h-screen bg-aura-light-bg text-aura-light-text dark:bg-aura-dark-bg dark:text-aura-dark-text font-sans antialiased selection:bg-zinc-950 selection:text-white dark:selection:bg-white dark:selection:text-zinc-950">
+      <body
+        suppressHydrationWarning
+        className="min-h-screen bg-aura-light-bg text-aura-light-text dark:bg-aura-dark-bg dark:text-aura-dark-text font-sans antialiased selection:bg-zinc-950 selection:text-white dark:selection:bg-white dark:selection:text-zinc-950"
+      >
         <Providers>
           {children}
         </Providers>
