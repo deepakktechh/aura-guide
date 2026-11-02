@@ -2,7 +2,28 @@
   "name": "aura-guide",
   "private": true,
   "version": "1.0.0",
+  "description": "AURA GUIDE — Spatial Awareness Attachment for the Visually Impaired. An offline-first, haptic wearable engineered to detect mid-level obstacles through millimetric Time-of-Flight laser telemetry.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepakktechh/aura-guide.git"
+  },
+  "keywords": [
+    "assistive-technology",
+    "spatial-awareness",
+    "visually-impaired",
+    "time-of-flight",
+    "vl53l0x",
+    "haptics",
+    "arduino",
+    "react18",
+    "typescript",
+    "gsap-scrolltrigger",
+    "accessibility",
+    "wcag22"
+  ],
+  "author": "Deepak Sharma (SRM IST)",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
