@@ -1,8 +1,13 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') { gsap.registerPlugin(ScrollTrigger); }
 import { Sliders, ShieldCheck, Activity, Eye, Cpu, Bell } from 'lucide-react';
 
 export const MasterHowItWorks: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const [activeTab, setActiveTab] = useState<'demo' | 'approaching' | 'close' | 'safe'>('approaching');
 
   const distanceMap = {
@@ -14,8 +19,49 @@ export const MasterHowItWorks: React.FC = () => {
 
   const current = distanceMap[activeTab];
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.how-elem',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+      gsap.fromTo(
+        '.how-interactive-box',
+        { opacity: 0, scale: 0.96, y: 35 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+            once: true,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
   return (
-    <section id="how-it-works" className="bg-white dark:bg-[#121417] text-zinc-900 dark:text-white py-20 lg:py-28 border-b border-zinc-200/60 dark:border-white/10 transition-colors duration-200">
+    <section id="how-it-works" ref={sectionRef} className="bg-white dark:bg-[#121417] text-zinc-900 dark:text-white py-20 lg:py-28 border-b border-zinc-200/60 dark:border-white/10 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Top Control Bar: Overline + Tab Pills */}
@@ -57,15 +103,15 @@ export const MasterHowItWorks: React.FC = () => {
           
           {/* Left Column: Headline & Narrative */}
           <div className="lg:col-span-5 space-y-6">
-            <h2 className="font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-zinc-950 dark:text-white uppercase leading-[1.02]">
+            <h2 className="how-elem font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-zinc-950 dark:text-white uppercase leading-[1.02]">
               FROM SPACE TO SENSATION.
             </h2>
 
-            <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+            <p className="how-elem text-base sm:text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
               Aura Guide detects frontal barriers using laser reflection timing and converts distance changes into gentle, intuitive tactile pulses that calibrate in real time.
             </p>
 
-            <div className="p-4 rounded-2xl bg-[#F7F3F6] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 space-y-1.5 text-xs text-zinc-600 dark:text-zinc-400">
+            <div className="how-elem p-4 rounded-2xl bg-[#F7F3F6] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 space-y-1.5 text-xs text-zinc-600 dark:text-zinc-400">
               <span className="font-mono font-bold text-zinc-950 dark:text-white block uppercase text-[10px] tracking-wider">
                 TACTILE LOGIC (PROTOTYPE)
               </span>
@@ -77,7 +123,7 @@ export const MasterHowItWorks: React.FC = () => {
 
           {/* Right Column: Interactive Distance Simulation Card */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl bg-[#F7F3F6] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 p-8 sm:p-12 shadow-xl overflow-hidden min-h-[380px] flex items-center justify-between">
+            <div className="how-interactive-box relative rounded-3xl bg-[#F7F3F6] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 p-8 sm:p-12 shadow-xl overflow-hidden min-h-[380px] flex items-center justify-between">
               
               {/* Traveler Avatar */}
               <div className="relative z-10 flex flex-col items-center">

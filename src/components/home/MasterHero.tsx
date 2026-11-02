@@ -7,16 +7,88 @@ interface MasterHeroProps {
   onScrollToDemo?: () => void;
 }
 
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
   const [activeCallout, setActiveCallout] = useState<string | null>(null);
-  const [scrollY, setScrollY] = useState(0);
+  const containerRef = React.useRef<HTMLElement>(null);
+  const headlineRef = React.useRef<HTMLHeadingElement>(null);
+  const cardRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || !containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      if (headlineRef.current) {
+        gsap.fromTo(
+          headlineRef.current,
+          { opacity: 0, y: 35, filter: 'blur(6px)' },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 1.0,
+            ease: 'power3.out',
+            delay: 0.1,
+          }
+        );
+      }
+
+      gsap.fromTo(
+        '.hero-flank-left',
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power2.out', delay: 0.25 }
+      );
+
+      gsap.fromTo(
+        '.hero-flank-right',
+        { opacity: 0, x: 30 },
+        { opacity: 1, x: 0, duration: 0.9, ease: 'power2.out', delay: 0.3 }
+      );
+
+      if (cardRef.current) {
+        gsap.fromTo(
+          cardRef.current,
+          { opacity: 0, scale: 0.94, y: 30 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 1.1,
+            ease: 'power3.out',
+            delay: 0.2,
+          }
+        );
+
+        gsap.to(cardRef.current, {
+          y: -12,
+          duration: 3.2,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      }
+
+      gsap.to('.hero-headline-wrap', {
+        y: 40,
+        opacity: 0.85,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2,
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   const callouts = {
@@ -41,7 +113,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
   };
 
   return (
-    <section className="relative bg-[#F7F3F6] dark:bg-[#0c0e10] text-zinc-900 dark:text-white pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden border-b border-zinc-200/60 dark:border-white/10 transition-colors duration-200">
+    <section ref={containerRef} className="relative bg-[#F7F3F6] dark:bg-[#0c0e10] text-zinc-900 dark:text-white pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden border-b border-zinc-200/60 dark:border-white/10 transition-colors duration-200">
       
       {/* Subtle ambient pastel gradient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-pink-100/40 via-purple-100/30 to-blue-100/40 dark:from-white/5 dark:via-transparent dark:to-transparent blur-[140px] pointer-events-none rounded-full" />
@@ -50,10 +122,10 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
         
         {/* Giant Bold Headline across the top matching reference template */}
         <div 
-          className="text-center w-full mb-10 sm:mb-14 lg:mb-16 transition-transform duration-300"
-          style={{ transform: `translateY(${Math.min(scrollY * 0.12, 40)}px)` }}
+          className="hero-headline-wrap text-center w-full mb-10 sm:mb-14 lg:mb-16"
+          
         >
-          <h1 className="font-heading font-black text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] tracking-tight text-zinc-950 dark:text-white uppercase leading-[0.92] select-none">
+          <h1 ref={headlineRef} className="font-heading font-black text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] tracking-tight text-zinc-950 dark:text-white uppercase leading-[0.92] select-none">
             SPATIAL SENSING. REAL RESULTS.
           </h1>
         </div>
@@ -62,7 +134,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
           
           {/* Left Column (3 cols): Narrative, Underline link, and Black Pill CTA */}
-          <div className="lg:col-span-3 flex flex-col justify-center space-y-6 text-left order-2 lg:order-1">
+          <div className="hero-flank-left lg:col-span-3 flex flex-col justify-center space-y-6 text-left order-2 lg:order-1">
             <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans max-w-sm">
               Take the step towards a safer, more intuitive world — explore our wearable spatial awareness attachment engineered to complement traditional mobility aids.
             </p>
@@ -109,11 +181,8 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
           <div className="lg:col-span-6 flex flex-col items-center justify-center relative order-1 lg:order-2 my-4 lg:my-0">
             
             <div 
-              className="relative w-full max-w-md sm:max-w-lg aspect-[4/5] sm:aspect-[1/1] flex items-center justify-center animate-float"
-              style={{
-                transform: `translateY(${Math.max(scrollY * -0.08, -30)}px)`,
-                transition: 'transform 0.15s ease-out'
-              }}
+              ref={cardRef} className="relative w-full max-w-md sm:max-w-lg aspect-[4/5] sm:aspect-[1/1] flex items-center justify-center"
+
             >
               
               {/* Product Card Container with realistic soft drop shadow */}
@@ -254,7 +323,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
           </div>
 
           {/* Right Column (3 cols): Explainer Paragraph & Floating Detail Inset Circle */}
-          <div className="lg:col-span-3 flex flex-col justify-between space-y-8 text-left order-3">
+          <div className="hero-flank-right lg:col-span-3 flex flex-col justify-between space-y-8 text-left order-3">
             <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans max-w-sm">
               Our products are carefully formulated with science-backed sensor feedback, free from wireless dependency, and built to open-source accessibility standards.
             </p>

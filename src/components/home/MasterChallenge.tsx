@@ -11,20 +11,20 @@ export const MasterChallenge: React.FC = () => {
           
           {/* Left Column (6 cols): Overline, Minimal Headline, Narrative & Solid Black Pill */}
           <div className="lg:col-span-6 space-y-7">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-mono text-zinc-600 dark:text-zinc-300">
+            <div className="challenge-elem inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-mono text-zinc-600 dark:text-zinc-300">
               <span className="font-bold text-zinc-950 dark:text-white">01</span>
               <span>/ THE CHALLENGE</span>
             </div>
 
-            <h2 className="font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-zinc-950 dark:text-white uppercase leading-[1.02]">
+            <h2 className="challenge-elem font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-zinc-950 dark:text-white uppercase leading-[1.02]">
               A WORLD NOT DESIGNED FOR EVERYONE.
             </h2>
 
-            <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-lg leading-relaxed font-sans">
+            <p className="challenge-elem text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-lg leading-relaxed font-sans">
               Navigating unfamiliar spaces remains a daily friction point for visually impaired individuals. Hanging hazards, chest-height obstructions, and crowded corridors often evade conventional cane sweeps.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-2">
+            <div className="challenge-elem grid grid-cols-2 gap-4 pt-2">
               <div className="p-4 rounded-2xl bg-[#F7F3F6] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800">
                 <div className="text-2xl font-bold font-heading text-zinc-950 dark:text-white">
                   60%
@@ -59,7 +59,7 @@ export const MasterChallenge: React.FC = () => {
 
           {/* Right Column (6 cols): Cane Traveler with Minimal Card Styling */}
           <div className="lg:col-span-6 flex items-center justify-center lg:justify-end">
-            <div className="relative max-w-md w-full">
+            <div className="challenge-image-card relative max-w-md w-full">
               
               {/* Image Frame with soft shadow */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 aspect-[4/5]">

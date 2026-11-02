@@ -1,9 +1,14 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') { gsap.registerPlugin(ScrollTrigger); }
 import { UserCheck, Shield, Globe, ArrowRight } from 'lucide-react';
 import { Link } from '@/components/common/CompatLink';
 
 export const MasterVision: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
   const highlights = [
     {
       title: 'Greater Independence',
@@ -22,30 +27,89 @@ export const MasterVision: React.FC = () => {
     },
   ];
 
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || !sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.vision-elem',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            once: true,
+          },
+        }
+      );
+      gsap.fromTo(
+        '.vision-card',
+        { opacity: 0, y: 25, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.75,
+          stagger: 0.12,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '.vision-highlights-grid',
+            start: 'top 85%',
+            once: true,
+          },
+        }
+      );
+      gsap.fromTo(
+        '.vision-photo-wrap',
+        { opacity: 0, x: 35, scale: 0.95 },
+        {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 1.0,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+            once: true,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="bg-white dark:bg-[#121417] text-zinc-900 dark:text-white py-20 lg:py-28 border-b border-zinc-200/60 dark:border-white/10 transition-colors duration-200">
+    <section ref={sectionRef} className="bg-white dark:bg-[#121417] text-zinc-900 dark:text-white py-20 lg:py-28 border-b border-zinc-200/60 dark:border-white/10 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column (6 cols): Overline, Headline, Narrative & Trio of Badges */}
           <div className="lg:col-span-6 space-y-7">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-mono text-zinc-600 dark:text-zinc-300 w-fit">
+            <div className="vision-elem inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-mono text-zinc-600 dark:text-zinc-300 w-fit">
               <span className="font-bold text-zinc-950 dark:text-white">05</span>
               <span>/ OUR VISION</span>
             </div>
 
-            <h2 className="font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-zinc-950 dark:text-white uppercase leading-[1.02]">
+            <h2 className="vision-elem font-heading font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight text-zinc-950 dark:text-white uppercase leading-[1.02]">
               TOWARDS A MORE INCLUSIVE TOMORROW.
             </h2>
 
-            <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-lg leading-relaxed font-sans">
+            <p className="vision-elem text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-lg leading-relaxed font-sans">
               Aura Guide is a step toward an ecosystem where visually impaired individuals can move through unfamiliar spaces with dignity, self-assurance, and tactile awareness.
             </p>
 
             {/* Trio of Feature Badges */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+            <div className="vision-highlights-grid grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
               {highlights.map((item) => (
-                <div key={item.title} className="p-3.5 rounded-2xl bg-[#F7F3F6] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 space-y-2">
+                <div key={item.title} className="vision-card p-3.5 rounded-2xl bg-[#F7F3F6] dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 space-y-2">
                   <div className="w-8 h-8 rounded-full bg-white dark:bg-zinc-800 flex items-center justify-center shadow-xs">
                     {item.icon}
                   </div>
@@ -76,7 +140,7 @@ export const MasterVision: React.FC = () => {
 
           {/* Right Column (6 cols): Skyline Photo with Minimal Floating Badge */}
           <div className="lg:col-span-6 flex items-center justify-center lg:justify-end">
-            <div className="relative max-w-md w-full">
+            <div className="vision-photo-wrap relative max-w-md w-full">
               
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 aspect-[4/3]">
                 <img
