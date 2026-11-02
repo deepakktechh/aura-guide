@@ -138,12 +138,12 @@ export const CinematicScrollStory: React.FC = () => {
       <div className="w-full overflow-hidden pb-16 lg:pb-20">
         <div
           ref={trackRef}
-          className="flex flex-col lg:flex-row lg:flex-nowrap w-full lg:w-[400%]"
+          className="flex flex-col md:flex-row md:flex-nowrap md:overflow-x-auto lg:overflow-visible w-full lg:w-[400%] snap-x-mandatory lg:snap-none pb-4 lg:pb-0"
         >
           {SCENES.map((scene) => (
             <div
               key={scene.num}
-              className="story-panel w-full lg:w-screen flex-shrink-0 px-4 sm:px-6 lg:px-12 py-6 flex items-center justify-center"
+              className="story-panel w-full md:w-[85vw] lg:w-screen flex-shrink-0 px-3 sm:px-6 lg:px-12 py-4 sm:py-6 flex items-center justify-center snap-x-center lg:snap-align-none"
             >
               <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 p-6 sm:p-10 shadow-xl">
                 

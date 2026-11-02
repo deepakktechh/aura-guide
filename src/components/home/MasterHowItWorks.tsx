@@ -72,7 +72,7 @@ export const MasterHowItWorks: React.FC = () => {
           </div>
 
           {/* Interactive State Tab Selector Buttons */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full snap-x-mandatory">
             {(['demo', 'approaching', 'close', 'safe'] as const).map((key) => {
               const labels = {
                 demo: 'Live Demo',
@@ -85,7 +85,7 @@ export const MasterHowItWorks: React.FC = () => {
                   key={key}
                   type="button"
                   onClick={() => setActiveTab(key)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 snap-x-center transition-all ${
                     activeTab === key
                       ? 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 shadow-sm'
                       : 'bg-[#F7F3F6] dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400'

@@ -122,10 +122,9 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
         
         {/* Giant Bold Headline across the top matching reference template */}
         <div 
-          className="hero-headline-wrap text-center w-full mb-10 sm:mb-14 lg:mb-16"
-          
+          className="hero-headline-wrap text-center w-full mb-8 sm:mb-12 lg:mb-16"
         >
-          <h1 ref={headlineRef} className="font-heading font-black text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] tracking-tight text-zinc-950 dark:text-white uppercase leading-[0.92] select-none">
+          <h1 ref={headlineRef} className="font-heading font-black text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-[5.2rem] xl:text-[5.8rem] tracking-tight text-zinc-950 dark:text-white uppercase leading-[0.94] select-none break-words">
             SPATIAL SENSING. REAL RESULTS.
           </h1>
         </div>
