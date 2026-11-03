@@ -60,7 +60,7 @@ export const Navbar: React.FC = () => {
         style={{ width: `${scrollProgress}%` }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-18 py-2.5 sm:py-3.5 flex items-center justify-between gap-2">
         
         {/* Brand Wordmark matching exact user logo specification */}
         <Link
@@ -146,9 +146,10 @@ export const Navbar: React.FC = () => {
           {/* Dark Minimal Pill Button: "Dashboard" / "Login" like reference */}
           <Link
             to="/dashboard"
-            className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 text-xs font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 active:scale-95 transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 px-3 sm:px-5 py-1.5 sm:py-2 rounded-full bg-zinc-950 text-white dark:bg-white dark:text-zinc-950 text-[11px] sm:text-xs font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-100 active:scale-95 transition-all shadow-sm whitespace-nowrap"
           >
-            <span>Guardian Demo</span>
+            <span className="hidden xs:inline">Guardian Demo</span>
+            <span className="xs:hidden">Demo</span>
           </Link>
 
           {/* Minimal Theme Switcher */}

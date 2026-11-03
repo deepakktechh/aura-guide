@@ -71,7 +71,7 @@ export const MasterPrototype: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column (5 cols): Overline, Headline, Narrative & Black Pill CTA */}
-          <div className="lg:col-span-5 space-y-7">
+          <div className="lg:col-span-5 space-y-7 text-center lg:text-left flex flex-col items-center lg:items-start">
             <div className="proto-elem inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-mono text-zinc-600 dark:text-zinc-300 w-fit">
               <span className="font-bold text-zinc-950 dark:text-white">04</span>
               <span>/ THE PROTOTYPE</span>

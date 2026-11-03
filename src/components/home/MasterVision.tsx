@@ -92,7 +92,7 @@ export const MasterVision: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column (6 cols): Overline, Headline, Narrative & Trio of Badges */}
-          <div className="lg:col-span-6 space-y-7">
+          <div className="lg:col-span-6 space-y-7 text-center lg:text-left flex flex-col items-center lg:items-start">
             <div className="vision-elem inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-xs font-mono text-zinc-600 dark:text-zinc-300 w-fit">
               <span className="font-bold text-zinc-950 dark:text-white">05</span>
               <span>/ OUR VISION</span>

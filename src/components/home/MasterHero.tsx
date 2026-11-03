@@ -133,7 +133,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
           
           {/* Left Column (3 cols): Narrative, Underline link, and Black Pill CTA */}
-          <div className="hero-flank-left lg:col-span-3 flex flex-col justify-center space-y-6 text-left order-2 lg:order-1">
+          <div className="hero-flank-left lg:col-span-3 flex flex-col justify-center space-y-5 sm:space-y-6 text-center lg:text-left items-center lg:items-start order-2 lg:order-1">
             <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans max-w-sm">
               Take the step towards a safer, more intuitive world — explore our wearable spatial awareness attachment engineered to complement traditional mobility aids.
             </p>
@@ -177,15 +177,15 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
           </div>
 
           {/* Center Column (6 cols): Centerpiece Product Showcase with Floating Animation & Parallax */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center relative order-1 lg:order-2 my-4 lg:my-0">
+          <div className="lg:col-span-6 flex flex-col items-center justify-center relative order-1 lg:order-2 my-2 sm:my-4 lg:my-0 w-full overflow-hidden sm:overflow-visible">
             
             <div 
-              ref={cardRef} className="relative w-full max-w-md sm:max-w-lg aspect-[4/5] sm:aspect-[1/1] flex items-center justify-center"
+              ref={cardRef} className="relative w-full max-w-xs sm:max-w-md lg:max-w-lg aspect-auto py-4 sm:py-6 sm:aspect-[1/1] flex flex-col items-center justify-center"
 
             >
               
               {/* Product Card Container with realistic soft drop shadow */}
-              <div className="relative w-72 sm:w-80 md:w-88 rounded-[36px] bg-gradient-to-b from-white via-[#FCFAFC] to-[#F2EEF2] dark:from-zinc-900 dark:via-zinc-900/95 dark:to-zinc-950 border border-white/80 dark:border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.12)] p-6 sm:p-7 flex flex-col items-center justify-between overflow-hidden group">
+              <div className="relative w-64 sm:w-80 md:w-88 rounded-[32px] sm:rounded-[36px] bg-gradient-to-b from-white via-[#FCFAFC] to-[#F2EEF2] dark:from-zinc-900 dark:via-zinc-900/95 dark:to-zinc-950 border border-white/80 dark:border-white/10 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.12)] p-5 sm:p-7 flex flex-col items-center justify-between overflow-hidden group mx-auto">
                 
                 {/* Subtle top cap / clip detail */}
                 <div className="w-24 h-5 rounded-t-xl bg-zinc-200 dark:bg-zinc-800 border-t border-x border-zinc-300 dark:border-zinc-700 shadow-inner flex items-center justify-center">
@@ -256,7 +256,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
 
               {/* CALLOUT 1: Top-Right (— 2.0m ToF Sensing) */}
               <div 
-                className="absolute top-[16%] right-0 sm:-right-4 z-20 hidden sm:flex items-center group cursor-pointer"
+                className="absolute top-[16%] -right-2 sm:-right-4 z-20 hidden lg:flex items-center group cursor-pointer"
                 onMouseEnter={() => setActiveCallout('tof')}
                 onMouseLeave={() => setActiveCallout(null)}
               >
@@ -269,7 +269,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
 
               {/* CALLOUT 2: Bottom-Left (Dual Haptic Motors +) */}
               <div 
-                className="absolute bottom-[24%] left-0 sm:-left-6 z-20 hidden sm:flex items-center group cursor-pointer"
+                className="absolute bottom-[24%] -left-2 sm:-left-6 z-20 hidden lg:flex items-center group cursor-pointer"
                 onMouseEnter={() => setActiveCallout('haptic')}
                 onMouseLeave={() => setActiveCallout(null)}
               >
@@ -282,7 +282,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
 
               {/* CALLOUT 3: Bottom-Right (+ 100% Offline MCU) */}
               <div 
-                className="absolute bottom-[10%] right-0 sm:-right-2 z-20 hidden sm:flex items-center group cursor-pointer"
+                className="absolute bottom-[10%] -right-2 sm:-right-2 z-20 hidden lg:flex items-center group cursor-pointer"
                 onMouseEnter={() => setActiveCallout('mcu')}
                 onMouseLeave={() => setActiveCallout(null)}
               >
@@ -322,7 +322,7 @@ export const MasterHero: React.FC<MasterHeroProps> = ({ onScrollToDemo }) => {
           </div>
 
           {/* Right Column (3 cols): Explainer Paragraph & Floating Detail Inset Circle */}
-          <div className="hero-flank-right lg:col-span-3 flex flex-col justify-between space-y-8 text-left order-3">
+          <div className="hero-flank-right lg:col-span-3 flex flex-col justify-between space-y-8 text-center lg:text-left items-center lg:items-start order-3">
             <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans max-w-sm">
               Our products are carefully formulated with science-backed sensor feedback, free from wireless dependency, and built to open-source accessibility standards.
             </p>
